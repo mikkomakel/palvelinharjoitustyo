@@ -16,16 +16,7 @@ public class KayttajaController {
     @GetMapping("/")
     @ResponseBody
     private String hello(){
-        kayttajaRepository.save(new Kayttaja("Keijo Käyttäjä", "suola"));
-        List<Kayttaja> users = this.kayttajaRepository.findAll();
 
-        StringBuilder response = new StringBuilder("<html>");
-        for (Kayttaja user : users){
-            response.append(user.toString());
-            response.append("<br>");
-        }
-        response.append("</html>");
-
-        return response.toString();
+        return "index";
     }
 }
