@@ -1,10 +1,17 @@
 package com.example.demo;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "events")
 public class Event {
 
@@ -20,7 +27,7 @@ public class Event {
     @Column(name = "event_title", nullable = false)
     private String eventTitle;
 
-    @Column(name = "event_description", columnDefinition = "TEXT")
+    @Column(name = "event_description")
     private String eventDescription;
 
     @Column(name = "event_date")
@@ -35,8 +42,6 @@ public class Event {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<EventCategory> eventCategories;
 
-    public Event() {
-    }
 
-    // Getters and setters
+
 }

@@ -1,26 +1,24 @@
 package com.example.demo;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
-
-    @Column(name = "username", nullable = false)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class User extends AbstractPersistable<Long> {
     private String username;
-
-    @Column(name = "password_hash", nullable = false)
+    private String password;
     private String passwordHash;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Category> categories;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Event> events;
 }
