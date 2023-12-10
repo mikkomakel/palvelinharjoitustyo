@@ -44,6 +44,22 @@ public class MessageController {
 
         return "redirect:/messages";
     }
+    @GetMapping("/messages/edit/{id}")
+    public String editForm(@PathVariable Long id, Model model) {
+        Message message = messageRepository.findById(id).orElse(null);
+        model.addAttribute("message", message);
+        return "editMessage"; // Create a new Thymeleaf template for editing
+    }
+
+    @PostMapping("/messages/edit/{id}")
+    public String edit(@PathVariable Long id, @RequestParam String content) {
+        Message message = messageRepository.findById(id).orElse(null);
+        if (message != null) {
+            message.setContent(content);
+            messageRepository.save(message);
+        }
+        return "redirect:/messages";
+    }
     @PostMapping("/messages/delete/{id}")
     public String delete(@PathVariable Long id) {
         // Tässä voit käyttää messageRepository.deleteById(id) tai vastaavaa

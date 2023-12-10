@@ -16,6 +16,10 @@
     <li th:each="message : ${messages}">
         <span th:text="${message.user.username + ': ' + message.content + ' - ' + message.createdAt}">msg</span>
 
+        <!-- Edit button -->
+        <a th:href="@{/messages/edit/{id}(id=${message.id})}">Edit</a>
+
+        <!-- Delete button -->
         <form th:action="@{/messages/delete/{id}(id=${message.id})}" method="post">
             <input type="submit" value="Delete" />
         </form>
