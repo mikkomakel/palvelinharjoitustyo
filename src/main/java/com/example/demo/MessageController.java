@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class MessageController {
@@ -21,9 +22,19 @@ public class MessageController {
     @Autowired
     private AccountRepository accountRepository;
 
+
     @GetMapping("/messages")
     public String view(Model model) {
-        model.addAttribute("messages", messageRepository.findAll());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        // Hae käyttäjä
+        Account currentUser = accountRepository.findByUsername(username);
+
+        // Hae käyttäjän omat viestit
+        List<Message> userMessages = messageRepository.findByUser(currentUser);
+
+        model.addAttribute("messages", userMessages);
         return "messages";
     }
 
