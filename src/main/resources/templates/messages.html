@@ -29,6 +29,10 @@
 
 <form method="POST" th:action="@{/messages}" action="/messages">
     <input type="text" name="content"/>
+    <select name="type">
+        <option value="Notification">Notification</option>
+        <option value="Alert">Alert</option>
+    </select>
     <input type="submit" value="Add!"/>
 
 </form>

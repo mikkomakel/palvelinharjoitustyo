@@ -22,7 +22,8 @@ public class MessageController {
     @Autowired
     private AccountRepository accountRepository;
 
-
+    @Autowired
+    private MessageTypeRepository messageTypeRepository;
     @GetMapping("/messages")
     public String view(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -39,18 +40,21 @@ public class MessageController {
     }
 
     @PostMapping("/messages")
-    public String add(@RequestParam String content) {
+    public String add(@RequestParam String content, String type) {
         if (content != null && !content.trim().isEmpty()) {
             Message msg = new Message();
             msg.setContent(content.trim());
-
             msg.setCreatedAt(new Date());
-            
+
+            MessageType msgtype = new MessageType();
+            msgtype.setType(type);
+
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String username = auth.getName();
 
             msg.setUser(accountRepository.findByUsername(username));
             messageRepository.save(msg);
+            messageTypeRepository.save(msgtype);
         }
 
         return "redirect:/messages";

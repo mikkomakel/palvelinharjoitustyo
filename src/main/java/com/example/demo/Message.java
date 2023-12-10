@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,10 +21,14 @@ public class Message extends AbstractPersistable<Long> {
     @ManyToOne
     private Account user;
     private String content;
+    private String type;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+    @ManyToMany(mappedBy = "messages")
+    @Transient
+    private List<MessagesAndTypes> mmt;
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+    //public void setCreatedAt(Date createdAt) {
+    //this.createdAt = createdAt;
+    //}
 }
