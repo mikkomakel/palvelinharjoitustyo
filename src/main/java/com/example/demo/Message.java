@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,21 +16,17 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Message extends AbstractPersistable<Long> {
+public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long m_id;
     @ManyToOne
     private Account user;
     private String content;
     private String type;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @ManyToMany(mappedBy = "messages")
-    @Transient
-    private List<MessagesAndTypes> mmt;
+    @OneToMany(mappedBy = "message")
+    private List<MessagesAndTypes> mmt = new ArrayList<>();
 
-    //public void setCreatedAt(Date createdAt) {
-    //this.createdAt = createdAt;
-    //}
 }
